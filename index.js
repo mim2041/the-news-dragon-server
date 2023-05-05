@@ -21,22 +21,20 @@ app.get('/news', (req, res) => {
 })
 
 app.get('/news/:id', (req, res) => {
-    const id = req.params.id;
-    console.log(id);
-    const selectedNews = news.find(n => n._id === id);
-    res.send(selectedNews);
+    const id = parseInt(req.params.id);
+    if(id===0){
+        res.send(news);
+    }
+    else{
+        const selectedNews = news.find(n => n._id === id);
+        res.send(categoryNews)
+    }
 })
 
 app.get('/categories/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    if(id === 0){
-        res.send(news);
-    }
-    else{
-
-        const categoryNews = news.filter(n => parseInt(n.category_id) === id);
-        res.send(categoryNews);
-    }
+    const categoryNews = news.filter(n=> n.category_id === id);
+    res.send(categoryNews);
 })
 
 app.listen(port, () => {
